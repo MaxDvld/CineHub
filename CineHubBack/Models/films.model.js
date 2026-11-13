@@ -34,3 +34,11 @@ export const getShowingFilms = async () => {
     )
     return rows 
 }
+
+export const insertFilm = async (title, description, duration, genre, release_date, is_showing) => {
+    const [results] = await db.query(
+        "INSERT INTO films (fi_title, fi_description, fi_duration, fi_genre, fi_release_date, fi_is_showing) VALUES (?, ?, ?, ?, ?, ?)",  
+        [title, description, duration, genre, release_date, is_showing]
+    );
+    return results;
+}

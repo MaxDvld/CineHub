@@ -1,4 +1,4 @@
-import { getAllFilms, getShowingFilms, getFilmById, getUpcomingScreeningsByFilm } from "../Models/films.model.js";
+import { getAllFilms, getShowingFilms, getFilmById, getUpcomingScreeningsByFilm, insertFilm } from "../Models/films.model.js";
 
 // GET /films → liste de tous les films
 export const getFilms = async (req, res) => {
@@ -35,5 +35,26 @@ export const getFilm = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Erreur lors de la récupération du film" });
+    }
+};
+export const createFilm = async (req, res) => {
+    try {
+        const { title, description, duration, genre, release_date, is_showing } = req.body;                             // le numéro écrit dans l'URL
+        if (!title || !duration){
+            return res.status(403).json({error : "Veuillez rentrez le film et sa durée"})                          // on renvoie les deux ensemble
+        } 
+        const result = await insertFilm (
+            title,
+            description ?? null,
+            duration, 
+            genre ?? null,
+            release_date ?? null,
+            is_showing ?? 1
+        )
+        res.status(201).json({ message: "film créé", id: result.insertId})
+        
+    }catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erreur lors de la création du film" });
     }
 };

@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
 });
 app.use("/films",checkToken, filmsRoute)
 
+
 // 6. Démarrer le serveur sur le port du .env
 const PORT = process.env.SERVER_PORT;
 

@@ -1,5 +1,6 @@
 import { Router } from "express";                                  // { Router } avec accolades et majuscule
-import { getFilms, getFilm, getShowing } from "../Controllers/films.controller.js";     // la fonction du Controller
+import { getFilms, getFilm, getShowing, createFilm } from "../Controllers/films.controller.js";     // la fonction du Controller
+import { checkAdmin } from "../Middlewares/admin.middleware.js";
 
 const router = Router();      // on CRÉE le routeur
 
@@ -8,4 +9,5 @@ router.get("/", getFilms);
 router.get("/showing", getShowing)
 router.get("/:id", getFilm)
 
+router.post("/", checkAdmin, createFilm)
 export default router;
