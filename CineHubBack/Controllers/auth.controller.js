@@ -20,6 +20,7 @@
        // 5. Répondre 201 (créé) SANS renvoyer le mot de passe
        res.status(201).json({ message: "Utilisateur créé", result });
      } catch (error) {
+      console.error(error)
        // En cas de problème (ex : username déjà pris) → 500
        res.status(500).json({ error: "Erreur lors de l'inscription" });
      }

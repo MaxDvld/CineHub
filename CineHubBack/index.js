@@ -3,9 +3,8 @@ import "dotenv/config";
 // 2. Importer Express et créer l'application (le serveur)
 import express from "express";
 import authRoute from "./Routes/auth.route.js";
-const app = express();
 import db from "./Config/db.js"; // connexion à la base
-
+const app = express();
 // 3. Permet au serveur de lire le JSON envoyé par Postman
 app.use(express.json());
 
