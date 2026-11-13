@@ -4,6 +4,9 @@ import "dotenv/config";
 import express from "express";
 import authRoute from "./Routes/auth.route.js";
 import db from "./Config/db.js"; // connexion à la base
+import { checkToken } from "./Middlewares/auth.middleware.js"
+import { checkAdmin } from "./Middlewares/admin.middleware.js"
+
 const app = express();
 // 3. Permet au serveur de lire le JSON envoyé par Postman
 app.use(express.json());
@@ -14,6 +17,11 @@ app.use("/auth", authRoute); // toutes les URL qui commencent par /auth (publiqu
 app.get("/", (req, res) => {
     res.json({ status: "OK" }); // on répond toujours en JSON
 });
+// ⚠️ ROUTE TEMPORAIRE pour tester checkToken (à supprimer après le test)
+// Le vigile checkToken est placé AVANT la fonction finale :
+// la demande passe d'abord par lui, et seulement s'il appelle next(), on arrive à la fonction
+
+
 
 // 6. Démarrer le serveur sur le port du .env
 const PORT = process.env.SERVER_PORT;

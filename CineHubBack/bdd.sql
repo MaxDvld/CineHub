@@ -78,9 +78,9 @@
    -- 4. DONNÉES DE TEST
    -- =============================================
 
-   -- Compte admin (mot de passe en clair : admin123)
+     -- Admin de test (mot de passe en clair : Admin1234)
    INSERT INTO users (us_username, us_email, us_password, us_role) VALUES
-   ('admin', 'admin@cinehub.fr', '$2b$10$ExXvH5SwTqspZ4bASJEgIu5c1jE85CUo0G2W91TYfygP0x/qwbqP6', 'admin');
+   ('admin', 'admin@cinehub.fr', '$2b$10$bNqtHftrcpFnydCFx/GaseAk3VaOjQ1jIcYP70xRYKXJ7xvVxXcx6', 'admin');
 
    -- Films (Titanic n'est plus à l'affiche : pratique pour tester /films/showing)
    INSERT INTO films (fi_title, fi_description, fi_duration, fi_genre, fi_release_date, fi_is_showing) VALUES
