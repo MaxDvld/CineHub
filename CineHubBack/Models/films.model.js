@@ -42,3 +42,11 @@ export const insertFilm = async (title, description, duration, genre, release_da
     );
     return results;
 }
+
+export const updateFilmById = async (id, title, description, duration, genre, release_date, is_showing) => {
+    const [results] = await db.query(
+        "UPDATE films SET fi_title = ?, fi_description = ?, fi_duration = ?, fi_genre = ?, fi_release_date = ?, fi_is_showing = ? WHERE fi_id = ?",  
+        [title, description, duration, genre, release_date, is_showing, id]
+    );
+    return results;
+}

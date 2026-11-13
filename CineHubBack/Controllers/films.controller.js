@@ -1,4 +1,4 @@
-import { getAllFilms, getShowingFilms, getFilmById, getUpcomingScreeningsByFilm, insertFilm } from "../Models/films.model.js";
+import { getAllFilms, getShowingFilms, getFilmById, getUpcomingScreeningsByFilm, insertFilm, updateFilmById } from "../Models/films.model.js";
 
 // GET /films → liste de tous les films
 export const getFilms = async (req, res) => {
@@ -37,6 +37,7 @@ export const getFilm = async (req, res) => {
         res.status(500).json({ error: "Erreur lors de la récupération du film" });
     }
 };
+
 export const createFilm = async (req, res) => {
     try {
         const { title, description, duration, genre, release_date, is_showing } = req.body;                             // le numéro écrit dans l'URL
@@ -58,3 +59,39 @@ export const createFilm = async (req, res) => {
         res.status(500).json({ error: "Erreur lors de la création du film" });
     }
 };
+
+// PATCH /films/:id → modifier un film (admin), seulement les champs envoyés
+export const updateFilm = async (req, res) => {
+    try {
+        const id = req.params.id;                    // le numéro du film dans l'URL
+
+        // 1. On cherche le film actuel
+        const film = await getFilmById(id);
+        if (!film) {
+            return res.status(404).json({ error: "Film introuvable" });
+        }
+
+        // 2. Ce que l'admin envoie (certains champs peuvent manquer)
+        const { title, description, duration, genre, release_date, is_showing } = req.body;
+
+        // 3. Nouvelle valeur si envoyée (??), sinon on garde l'ancienne
+        await updateFilmById(
+            id,
+            title ?? film.fi_title,
+            description ?? film.fi_description,
+            duration ?? film.fi_duration,
+            genre ?? film.fi_genre,
+            release_date ?? film.fi_release_date,
+            is_showing ?? film.fi_is_showing
+        );
+
+        // 4. On relit le film pour renvoyer sa version à jour
+        const updated = await getFilmById(id);
+        res.json({ message: "Film modifié", film: updated });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erreur lors de la modification du film" });
+    }
+};
+
