@@ -50,3 +50,11 @@ export const updateFilmById = async (id, title, description, duration, genre, re
     );
     return results;
 }
+
+export const deleteFilmById = async (id) => {
+    const [results] = await db.query(
+        "DELETE FROM films WHERE fi_id = ?",  
+        [id]
+    );
+    return results;
+}

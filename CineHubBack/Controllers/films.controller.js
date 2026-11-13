@@ -1,4 +1,4 @@
-import { getAllFilms, getShowingFilms, getFilmById, getUpcomingScreeningsByFilm, insertFilm, updateFilmById } from "../Models/films.model.js";
+import { getAllFilms, getShowingFilms, getFilmById, getUpcomingScreeningsByFilm, insertFilm, updateFilmById, deleteFilmById } from "../Models/films.model.js";
 
 // GET /films → liste de tous les films
 export const getFilms = async (req, res) => {
@@ -95,3 +95,17 @@ export const updateFilm = async (req, res) => {
     }
 };
 
+export const deleteFilm = async (req,res) => {
+    try {
+        const id = req.params.id
+        const film = await getFilmById (id)
+        if (!film){
+            return res.status(404).json({error : "Film introuvable"})
+        }
+        await deleteFilmById (id)
+        return res.status(200).json({message : "Le film a été supprimé"})
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({error : "Erreur lors de la suppression du film"})
+    }
+}
