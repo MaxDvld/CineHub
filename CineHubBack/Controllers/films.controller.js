@@ -1,4 +1,4 @@
-import { getAllFilms } from "../Models/films.model.js"; // ← .js ajouté
+import { getAllFilms, getShowingFilms } from "../Models/films.model.js"; // ← .js ajouté
 
 export const getFilms = async (req, res) => {
     try {
@@ -7,5 +7,15 @@ export const getFilms = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Erreur lors de la récupération des films" });
+    }
+};
+
+export const getShowing = async (req, res) => {
+    try {
+        const films = await getShowingFilms();
+        res.json(films); // 200 par défaut = "OK"
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erreur lors de la récupération des films en cours de projection" });
     }
 };
