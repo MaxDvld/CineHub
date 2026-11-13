@@ -8,6 +8,7 @@
      user: process.env.DB_USER,
      password: process.env.DB_PASSWORD,
      database: process.env.DB_NAME,
+     dateStrings: true, // ← AJOUT : renvoie les dates comme du texte ("2010-07-21"), sans décalage horaire
    });
 
    // On exporte db pour pouvoir l'utiliser dans les Models
