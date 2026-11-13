@@ -4,6 +4,7 @@ import "dotenv/config";
 import express from "express";
 import authRoute from "./Routes/auth.route.js";
 import filmsRoute from "./Routes/films.route.js"
+import roomsRoute from "./Routes/rooms.route.js"
 import db from "./Config/db.js"; // connexion à la base
 import { checkToken } from "./Middlewares/auth.middleware.js"
 import { checkAdmin } from "./Middlewares/admin.middleware.js"
@@ -19,7 +20,7 @@ app.get("/", (req, res) => {
     res.json({ status: "OK" }); // on répond toujours en JSON
 });
 app.use("/films",checkToken, filmsRoute)
-
+app.use("/rooms", checkToken, roomsRoute)
 
 // 6. Démarrer le serveur sur le port du .env
 const PORT = process.env.SERVER_PORT;
