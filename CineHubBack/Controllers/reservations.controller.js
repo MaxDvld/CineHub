@@ -1,4 +1,4 @@
-import { getCapacityByScreening, getReservedSeats, createReservation } from '../Models/reservations.model.js'
+import { getCapacityByScreening, getReservedSeats, createReservation, getReservationsByUser } from '../Models/reservations.model.js'
 
 export const insertReservation = async (req, res) => {
     try {
@@ -34,3 +34,18 @@ export const insertReservation = async (req, res) => {
         res.status(500).json({ error: "Erreur lors de la création de la réservation" })
     }
 }
+
+export const getMyReservations = async (req,res) => {
+    try {
+        const id = req.user.us_id
+        const reservation = await getReservationsByUser(id)
+        if (!reservation){
+            return res.status(404).json({ error : "Reservation introuvable"})
+        }
+        return res.status(200).json(reservation)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({error : "Erreur lors de la récupération des événements"})
+    }
+}
+

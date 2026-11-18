@@ -31,3 +31,17 @@ export const createReservation = async (user, screening, seats) =>{
     )
     return results.insertId
 }
+
+export const getReservationsByUser = async (userId) => {
+    const [rows] = await db.query(
+        `SELECT re_id, re_seats, fi_title, sc_datetime, ro_name, sc_price
+        FROM reservations 
+        JOIN screenings ON re_screening = sc_id
+        JOIN films ON sc_film = fi_id
+        JOIN rooms ON sc_room = ro_id
+        WHERE re_user = ?
+        ORDER BY sc_datetime`,
+        [userId]
+    )
+    return rows 
+}
