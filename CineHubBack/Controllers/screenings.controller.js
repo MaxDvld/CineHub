@@ -50,7 +50,7 @@ export const insertScreening = async (req, res) => {
 
 }
 
-export const patchScreeningById = async (req, res) => {
+export const patchScreening = async (req, res) => {
     try {
         const id = req.params.id
 
@@ -80,7 +80,7 @@ export const patchScreeningById = async (req, res) => {
     }
 }
 
-export const removeScreenings = async (req, res) => {
+export const removeScreening = async (req, res) => {
     try {
         const id = req.params.id
         const screening = await getScreeningById(id)

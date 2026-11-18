@@ -39,7 +39,7 @@ export const getScreeningByFilmId = async (filmId) => {
 export const createScreening = async (film, room, datetime, price) => {
     const [result] = await db.query(
         `INSERT INTO screenings (sc_film, sc_room, sc_datetime, sc_price)
-        VALUES (?,?,?,?),`
+        VALUES (?,?,?,?)`,
         [film, room, datetime, price]
     )
     return result.insertId
