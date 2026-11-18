@@ -1,4 +1,4 @@
-import { getCapacityByScreening, getReservedSeats, createReservation, getReservationsByUser } from '../Models/reservations.model.js'
+import { getCapacityByScreening, getReservedSeats, createReservation, getReservationsByUser, getAllReservations, getAllReservationsByScreening, getReservationById, deleteReservationById } from '../Models/reservations.model.js'
 
 export const insertReservation = async (req, res) => {
     try {
@@ -49,3 +49,48 @@ export const getMyReservations = async (req,res) => {
     }
 }
 
+export const getReservations  = async (req,res) =>{
+    try {
+        const reservations = await getAllReservations()
+        return res.status(200).json(reservations)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({error : "Erreur lors de la récupération des reservations"})
+    }
+}
+
+export const getScreeningReservations = async (req,res) =>{
+    try {
+        const screeningID = req.params.screeningID
+        const reservations = await getAllReservationsByScreening(screeningID)
+        return res.status(200).json(reservations)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({error : "Erreur lors de la recupération des résérvations par séance"})
+    }
+}
+
+export const cancelReservation = async (req, res) => {
+    try {
+        // 1. Le numéro de la RÉSERVATION, écrit dans l'adresse (/reservations/1)
+        const id = req.params.id
+
+        // 2. On lit CETTE réservation → si elle n'existe pas → 404
+        const reservation = await getReservationById(id)
+        if (!reservation) {
+            return res.status(404).json({ error: "Réservation introuvable" })
+        }
+
+        // 3. Ni le propriétaire, ni un admin → refus
+        if (reservation.re_user !== req.user.us_id && req.user.us_role !== "admin") {
+            return res.status(403).json({ error: "Vous ne pouvez annuler que vos propres réservations" })
+        }
+
+        // 4. On supprime, puis 5. on confirme
+        await deleteReservationById(id)
+        return res.status(200).json({ message: "Réservation annulée" })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: "Erreur lors de l'annulation de la réservation" })
+    }
+}
