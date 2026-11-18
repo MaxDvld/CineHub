@@ -1,6 +1,6 @@
 import db from '../Config/db.js'
 
-export const getScreenings = async () => {
+export const getAllScreenings = async () => {
     const [rows] = await db.query(
         `SELECT sc_id, sc_datetime, sc_price, fi_title, ro_name
         FROM screenings

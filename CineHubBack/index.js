@@ -5,6 +5,7 @@ import express from "express";
 import authRoute from "./Routes/auth.route.js";
 import filmsRoute from "./Routes/films.route.js"
 import roomsRoute from "./Routes/rooms.route.js"
+import screeningsRoute from "./Routes/screenings.route.js"
 import db from "./Config/db.js"; // connexion à la base
 import { checkToken } from "./Middlewares/auth.middleware.js"
 import { checkAdmin } from "./Middlewares/admin.middleware.js"
@@ -21,7 +22,7 @@ app.get("/", (req, res) => {
 });
 app.use("/films",checkToken, filmsRoute)
 app.use("/rooms", checkToken, roomsRoute)
-
+app.use("/screenings", checkToken, screeningsRoute)
 // 6. Démarrer le serveur sur le port du .env
 const PORT = process.env.SERVER_PORT;
 
