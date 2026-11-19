@@ -74,8 +74,8 @@ export const deleteUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: "Veuillez entrer un utilisateur valide" })
         }
-        const deleted = await deleteUserById(id)
-        res.json({ message: "L'utilisateur a été supprimé", users: deleted })
+        await deleteUserById(id)
+        res.json({ message: "L'utilisateur a été supprimé" })
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: "Erreur lors de la suppression de l'utilisateur" })

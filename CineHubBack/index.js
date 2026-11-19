@@ -7,9 +7,9 @@ import filmsRoute from "./Routes/films.route.js"
 import roomsRoute from "./Routes/rooms.route.js"
 import screeningsRoute from "./Routes/screenings.route.js"
 import reservationsRoute from "./Routes/reservations.route.js"
+import usersRoute from "./Routes/users.route.js"
 import db from "./Config/db.js"; // connexion à la base
 import { checkToken } from "./Middlewares/auth.middleware.js"
-import { checkAdmin } from "./Middlewares/admin.middleware.js"
 
 const app = express();
 // 3. Permet au serveur de lire le JSON envoyé par Postman
@@ -25,6 +25,7 @@ app.use("/films",checkToken, filmsRoute)
 app.use("/rooms", checkToken, roomsRoute)
 app.use("/screenings", checkToken, screeningsRoute)
 app.use("/reservations", checkToken, reservationsRoute)
+app.use("/users", checkToken, usersRoute)
 // 6. Démarrer le serveur sur le port du .env
 const PORT = process.env.SERVER_PORT;
 
