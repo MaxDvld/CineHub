@@ -54,7 +54,6 @@ export const patchScreening = async (req, res) => {
     try {
         const id = req.params.id
 
-        // ① LIRE la séance actuelle (pour avoir les anciennes valeurs)
         const screening = await getScreeningById(id)
         if (!screening) {
             return res.status(404).json({ error: "Séance introuvable" })
@@ -62,7 +61,6 @@ export const patchScreening = async (req, res) => {
 
         const { film, room, datetime, price } = req.body
 
-        // ② MODIFIER : nouvelle valeur si envoyée, sinon l'ancienne
         await updateScreeningById(
             id,
             film ?? screening.sc_film,
@@ -71,7 +69,6 @@ export const patchScreening = async (req, res) => {
             price ?? screening.sc_price
         )
 
-        // ③ RELIRE la séance pour l'afficher après la modification
         const updated = await getScreeningById(id)
         return res.status(200).json({ message: "Séance modifiée", screening: updated })
     } catch (error) {

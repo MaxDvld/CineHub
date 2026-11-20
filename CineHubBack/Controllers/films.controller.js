@@ -1,6 +1,5 @@
 import { getAllFilms, getShowingFilms, getFilmById, getUpcomingScreeningsByFilm, insertFilm, updateFilmById, deleteFilmById } from "../Models/films.model.js";
 
-// GET /films → liste de tous les films
 export const getFilms = async (req, res) => {
     try {
         const films = await getAllFilms();
@@ -11,7 +10,6 @@ export const getFilms = async (req, res) => {
     }
 };
 
-// GET /films/showing → films à l'affiche
 export const getShowing = async (req, res) => {
     try {
         const films = await getShowingFilms();
@@ -22,16 +20,15 @@ export const getShowing = async (req, res) => {
     }
 };
 
-// GET /films/:id → un film + ses prochaines séances
 export const getFilm = async (req, res) => {
     try {
-        const id = req.params.id;                                  // le numéro écrit dans l'URL
-        const film = await getFilmById(id);                        // on cherche le film
+        const id = req.params.id;
+        const film = await getFilmById(id);
         if (!film) {
             return res.status(404).json({ error: "Film introuvable" });
         }
-        const screenings = await getUpcomingScreeningsByFilm(id);  // puis ses séances à venir
-        res.json({ film, screenings });                            // on renvoie les deux ensemble
+        const screenings = await getUpcomingScreeningsByFilm(id);
+        res.json({ film, screenings });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Erreur lors de la récupération du film" });
@@ -40,9 +37,9 @@ export const getFilm = async (req, res) => {
 
 export const createFilm = async (req, res) => {
     try {
-        const { title, description, duration, genre, release_date, is_showing } = req.body;                             // le numéro écrit dans l'URL
+        const { title, description, duration, genre, release_date, is_showing } = req.body;
         if (!title || !duration){
-            return res.status(403).json({error : "Veuillez rentrez le film et sa durée"})                          // on renvoie les deux ensemble
+            return res.status(403).json({error : "Veuillez rentrez le film et sa durée"})
         } 
         const result = await insertFilm (
             title,
@@ -60,21 +57,17 @@ export const createFilm = async (req, res) => {
     }
 };
 
-// PATCH /films/:id → modifier un film (admin), seulement les champs envoyés
 export const updateFilm = async (req, res) => {
     try {
-        const id = req.params.id;                    // le numéro du film dans l'URL
+        const id = req.params.id;
 
-        // 1. On cherche le film actuel
         const film = await getFilmById(id);
         if (!film) {
             return res.status(404).json({ error: "Film introuvable" });
         }
 
-        // 2. Ce que l'admin envoie (certains champs peuvent manquer)
         const { title, description, duration, genre, release_date, is_showing } = req.body;
 
-        // 3. Nouvelle valeur si envoyée (??), sinon on garde l'ancienne
         await updateFilmById(
             id,
             title ?? film.fi_title,
@@ -85,7 +78,6 @@ export const updateFilm = async (req, res) => {
             is_showing ?? film.fi_is_showing
         );
 
-        // 4. On relit le film pour renvoyer sa version à jour
         const updated = await getFilmById(id);
         res.json({ message: "Film modifié", film: updated });
 

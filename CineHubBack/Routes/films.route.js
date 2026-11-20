@@ -1,10 +1,9 @@
-import { Router } from "express";                                  // { Router } avec accolades et majuscule
-import { getFilms, getFilm, getShowing, createFilm, updateFilm, deleteFilm} from "../Controllers/films.controller.js";     // la fonction du Controller
+import { Router } from "express";
+import { getFilms, getFilm, getShowing, createFilm, updateFilm, deleteFilm} from "../Controllers/films.controller.js";
 import { checkAdmin } from "../Middlewares/admin.middleware.js";
 
-const router = Router();      // on CRÉE le routeur
+const router = Router();
 
-// GET /films → liste des films
 router.get("/", getFilms);
 router.get("/showing", getShowing)
 router.get("/:id", getFilm)

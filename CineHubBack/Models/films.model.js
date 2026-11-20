@@ -15,7 +15,6 @@ export const getFilmById = async (id) => {
     return rows [0]
 }
 
-// Séances À VENIR d'un film, avec le nom de la salle (jointure)
 export const getUpcomingScreeningsByFilm = async (id) => {
     const [rows] = await db.query(
         `SELECT sc_id, sc_datetime, sc_price, ro_name

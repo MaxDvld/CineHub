@@ -1,6 +1,5 @@
 import db from '../Config/db.js'
 
-// Capacité de la salle où a lieu la séance (undefined si la séance n'existe pas)
 export const getCapacityByScreening = async (screeningId) => {
     const [rows] = await db.query(
         `SELECT ro_capacity
@@ -9,10 +8,9 @@ export const getCapacityByScreening = async (screeningId) => {
          WHERE sc_id = ?`,
         [screeningId]
     );
-    return rows[0]; // une seule séance → rows[0]
+    return rows[0];
 };
 
-// Nombre total de places déjà réservées pour une séance
 export const getReservedSeats = async (screeningId) => {
     const [rows] = await db.query(
         `SELECT COALESCE(SUM(re_seats), 0) AS total
@@ -20,7 +18,7 @@ export const getReservedSeats = async (screeningId) => {
          WHERE re_screening = ?`,
         [screeningId]
     );
-    return Number(rows[0].total); // on transforme en vrai nombre
+    return Number(rows[0].total);
 };
 
 export const createReservation = async (user, screening, seats) =>{

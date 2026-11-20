@@ -1,6 +1,5 @@
 import { getAllRooms, getRoomById, insertRoom, updateRoomById, deleteRoomById } from "../Models/rooms.model.js";
 
-// GET /rooms → toutes les salles
 export const getRooms = async (req, res) => {
     try {
         const rooms = await getAllRooms();
@@ -11,7 +10,6 @@ export const getRooms = async (req, res) => {
     }
 };
 
-// GET /rooms/:id → une salle
 export const getRoom = async (req, res) => {
     try {
         const id = req.params.id;
@@ -26,7 +24,6 @@ export const getRoom = async (req, res) => {
     }
 };
 
-// POST /rooms → créer une salle (admin)
 export const createRoom = async (req, res) => {
     try {
         const { name, capacity } = req.body;
@@ -41,7 +38,6 @@ export const createRoom = async (req, res) => {
     }
 };
 
-// PATCH /rooms/:id → modifier une salle (admin), seulement les champs envoyés
 export const updateRoom = async (req, res) => {
     try {
         const id = req.params.id;
@@ -63,7 +59,6 @@ export const updateRoom = async (req, res) => {
     }
 };
 
-// DELETE /rooms/:id → supprimer une salle (admin)
 export const deleteRoom = async (req, res) => {
     try {
         const id = req.params.id;
