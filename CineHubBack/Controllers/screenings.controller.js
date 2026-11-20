@@ -1,4 +1,4 @@
-import { getAllScreenings, getScreeningById, getScreeningByFilmId, createScreening, updateScreeningById, deleteScreeningById } from "../Models/screenings.models.js";
+import { getAllScreenings, getScreeningById, getScreeningByFilmId, createScreening, updateScreeningById, deleteScreeningById } from "../Models/screenings.model.js";
 
 export const getScreenings = async (req, res) => {
     try {
