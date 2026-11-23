@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { Alert, Row, Col, Card } from "react-bootstrap"
+import { Alert, Row, Col, Card, Button } from "react-bootstrap"
 import { apiFetch } from "../services/api.js"
-
+import { Link } from "react-router-dom"
 function Home() {
     const [films, setFilms] = useState([]) 
     const [error, setError] = useState("") 
@@ -38,6 +38,7 @@ function Home() {
                                     {film.fi_genre} · {film.fi_duration} min
                                 </Card.Subtitle>
                                 <Card.Text>{film.fi_description}</Card.Text>
+                                <Button as={Link} to={"/films/" + film.fi_id}>Détails</Button>
                             </Card.Body>
                         </Card>
                     </Col>

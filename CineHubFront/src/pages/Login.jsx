@@ -23,8 +23,6 @@ function Login() {
     }
     return (
 
-
-
         <div>
             <h1>Connexion</h1>
             {error && <Alert variant="danger">{error}</Alert>}
