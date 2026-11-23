@@ -8,8 +8,10 @@ import reservationsRoute from "./Routes/reservations.route.js"
 import usersRoute from "./Routes/users.route.js"
 import db from "./Config/db.js";
 import { checkToken } from "./Middlewares/auth.middleware.js"
+import cors from "cors"
 
 const app = express();
+app.use(cors({ origin: "http://localhost:5173"}))
 app.use(express.json());
 
 app.use("/auth", authRoute);
