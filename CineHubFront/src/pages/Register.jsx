@@ -1,16 +1,31 @@
 import { useState } from "react"
-import { Form, Button } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
+import { Form, Button, Alert } from "react-bootstrap"
+import { apiFetch } from "../services/api.js"
+
 
 function Register() {
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState("")
+    const navigate = useNavigate()
 
-
+    async function handleSubmit(e) {
+        e.preventDefault()
+        setError("")
+        try {
+            await apiFetch("/auth/register", "POST", { username, email, password })
+            navigate("/login")
+        } catch (err) {
+            setError(err.message)
+        }
+    }
     return (
         <div>
             <h1>Inscription</h1>
-            <Form>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                     <Form.Label>Pseudo</Form.Label>
                     <Form.Control
@@ -37,7 +52,6 @@ function Register() {
                 </Form.Group>
                 <Button type="submit">S'inscrire</Button>
             </Form>
-            <p>Test : {username} | {email} | {password}</p>
         </div>
     )
 }
