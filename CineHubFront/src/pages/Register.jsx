@@ -15,6 +15,7 @@ function Register() {
         e.preventDefault()
         setError("")
         try {
+          
             await apiFetch("/auth/register", "POST", { username, email, password })
             navigate("/login")
         } catch (err) {
