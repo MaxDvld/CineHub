@@ -19,7 +19,8 @@ export const register = async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Erreur lors de l'inscription" });
+        res.status(500).json({ error: "Erreur lors de l'inscription" })
+        console.log(error);
     }
 };
 
