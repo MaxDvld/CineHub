@@ -1,19 +1,23 @@
 import { Routes , Route } from "react-router-dom"
 import { Container } from "react-bootstrap"
 
-import HomePage from "./pages/Home.jsx"
-import RegisterPage from "./pages/Register.jsx"
-import LoginPage from "./pages/Login.jsx"
+import Home from "./pages/Home.jsx"
+import Register from "./pages/Register.jsx"
+import Login from "./pages/Login.jsx"
+import NavBar from "./components/NavBar.jsx"
 
 function App(){
   return (
+    <>
+    <NavBar/>
     <Container className="mt-4">
       <Routes>
-      <Route path="/" element={<HomePage/>}/>
-      <Route path="/register" element={<RegisterPage/>}/>
-      <Route path="/login" element={<LoginPage/>}/>
+      <Route path="/" element={<Home/>}/>
+      <Route path="/register" element={<Register/>}/>
+      <Route path="/login" element={<Login/>}/>
       </Routes>
     </Container>
+    </>
   )
 }
 
